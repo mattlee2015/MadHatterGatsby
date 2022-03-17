@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from "styled-components"
-import useStore from '../context/StoreContext'
+// import useStore from '../context/StoreContext'
 import withoutApostrophe from '../util/apostrophe'
 import slugify from 'slugify'
 import { Link } from 'gatsby'
 import moneyFormat from '../util/moneyFormat'
 
 const ProductCard = ({ product }) => {
-  const { addVariantToCart } = useStore()
+  // const { addVariantToCart } = useStore()
 
   const {title} = product
   const woa = withoutApostrophe(product.title)
@@ -16,7 +16,10 @@ const ProductCard = ({ product }) => {
 
   return (
     <Wrapper>
-      <AddButton onClick={() => addVariantToCart(product, 1)}><p>+</p></AddButton>
+      <AddButton onClick={
+        () => /*addVariantToCart(product, 1)*/
+        console.log("added item")}><p>+</p>
+      </AddButton>
       <ContentWrapper>
         <Link to={`/products/${slugTitle}`}>
         <Image src={product.images[0]?.originalSrc} alt={title}/>

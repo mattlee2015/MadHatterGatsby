@@ -1,4 +1,6 @@
 const path = require('path')
+const slugify = require('slugify')
+
 
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
@@ -13,35 +15,33 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   const {data} = await graphql(`
   {
-  allShopifyProduct {
+  allShopifyProductVariant {
     edges {
       node {
         id
         title
+        price
         shopifyId
-        priceRangeV2 {
-          maxVariantPrice {
-            amount
-          }
-        }
-        handle
-        description
-        variants {
-          shopifyId
-        }
-        images {
+        displayName
+        productId
+        sku
+        image {
           gatsbyImageData(layout: CONSTRAINED, placeholder: TRACED_SVG)
+        }
+        product{
+          handle
         }
       }
     }
   }
 }
-
   `)
 
-  data.allShopifyProduct.edges.forEach(({node}) =>{
+
+  data.allShopifyProductVariant.edges.forEach(({node}) =>{
+    const prodHandle = slugify(node.product.handle, {lower:true})
     createPage({
-      path: `products/${node.handle}`,
+      path: `products/${prodHandle}`,
       component: path.resolve(`src/templates/ProductTemplate/ProductTemplate.js`),
       context: {
         shopifyId: node.shopifyId

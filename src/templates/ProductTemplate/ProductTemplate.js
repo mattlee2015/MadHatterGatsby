@@ -1,165 +1,93 @@
-// import React from 'react'
-// import { graphql } from 'gatsby'
-// import Layout from '../../components/Layout'
-// import Grid from './ProductGridWrapper'
-// import ImageGallery from '../../components/ImageGallery/ImageGallery'
-
-
-
-// const ProductTemplate = ({data}) => {
-//     const {title, description, images} = data.shopifyProduct
-    
-//     return (
-//         <Layout>
-          
-//           <Grid>
-//             <div className='col-1'>
-//               <h1>{title}</h1>
-//               <p>{description}</p>
-//             </div>
-
-//             <div className='col-2'>
-//                 <ImageGallery images={images}></ImageGallery>
-//             </div>
-//           </Grid>
-//         </Layout>
-//     )
-// }
-
-// export const query = graphql`
-// query productQuery($shopifyId: String) {
-//   shopifyProduct(shopifyId: {eq: $shopifyId}) {
-//     shopifyId
-//     title
-//     tags
-//     description
-//     images {
-//       gatsbyImageData(placeholder: TRACED_SVG, layout: FULL_WIDTH)
-//       id
-//     }
-//   }
-// }
-// `
-// export default ProductTemplate
-import { navigate } from "gatsby-link"
-import React from "react"
-import styled from "styled-components"
-import { graphql } from 'gatsby'
-
-import Layout from "../../components/Layout"
-import PrimaryButton from "../../components/PrimaryButton"
-import useStore from "../../context/StoreContext"
-import useInput from "../../util/useInput"
+import React from 'react'
+import { graphql, navigate as gatsbyNavigate } from 'gatsby'
+import Layout from '../../components/Layout'
+import {Grid,SelectWrapper, Price} from './ProductGridWrapper'
+import ImageGallery from '../../components/ImageGallery/ImageGallery'
+import CartContext from '../../context/CartContext'
 import moneyFormat from '../../util/moneyFormat'
+// import { useLocation } from '@reach/router'
+
+
+const ProductTemplate = ({data}) => {
+    console.log(data)
+    const {getProductById} = React.useContext(CartContext)
+    const {title, description, images} = data.shopifyProductVariant.product
+    const [product, setProduct] = React.useState(null)
+    const [selectedVariant, setSelectedVariant] = React.useState(null)
+    // const {search, origin, pathname} = useLocation();
+    // console.log(search, origin, pathname)
+
+    React.useEffect(()=>{
+      getProductById(data.shopifyProductVariant.product.shopifyId).then(result=>{
+        // console.log(result)
+        setProduct(result)
+        setSelectedVariant(result.variants[0])
+        // console.log("PRODUCT ID Is: "+selectedVariant?.sku)
+  
+      })
+    }, [getProductById, data.shopifyProductVariant.product.shopifyId])
+
+    const handleVariantChange = (e) =>{
+      const newVariant = product?.variants.find(variant=>variant.id === e.target.value)
+      setSelectedVariant(newVariant)
+      gatsbyNavigate(`?variant=${encodeURIComponent(newVariant.id)}`)
+      // gastbyNavigate(`all-products?s=${encodeURIComponent(searchTerm)});
+    }
+
+    return (
+        <Layout>
+          
+          <Grid>
+            <div className="1">
+              <h1>{title}</h1>
+              <p>{description}</p>
+              {product?.availableForSale && (
+              <>
+              <SelectWrapper>
+                <strong>Variant</strong>
+                <select onChange={handleVariantChange}>
+                  {product?.variants.map((variant, index)=>{
+                    return (
+                      <option value={variant.id} key={index}>{variant.title}</option>
+                    )
+                  })}
+                </select>
+              </SelectWrapper>
+              <div>
+                {!!selectedVariant && <Price>${moneyFormat(selectedVariant.price)}</Price>}
+              </div>
+              </>
+              )}
+             
+            </div>
+            <div className="2">
+              <ImageGallery images={images}></ImageGallery>
+            </div>
+          </Grid>
+        </Layout>
+    )
+}
 
 export const query = graphql`
 query productQuery($shopifyId: String) {
-  shopifyProduct(shopifyId: {eq: $shopifyId}) {
+  shopifyProductVariant(shopifyId: {eq: $shopifyId}) {
+    id
     shopifyId
-    title
-    tags
-    description
-    images {
-      src
-    }
-    priceRangeV2 {
-      maxVariantPrice {
-        amount
+    product {
+      shopifyId
+      title
+      tags
+      description
+      images {
+        gatsbyImageData(layout: CONSTRAINED, width: 400, placeholder: TRACED_SVG)
+      }
+      priceRangeV2 {
+        maxVariantPrice {
+          amount
+        }
       }
     }
-
   }
 }
 `
-
-
-const ProductTemplate = ({ data }) => {
-  
-  const product = data.shopifyProduct
-  const newMoneyFormat = moneyFormat(product.priceRangeV2.maxVariantPrice.amount)
-  const { addVariantToCart } = useStore()
-  const bind = useInput(1)
-
-  return (
-    <Layout>
-      <BackButton onClick={() => navigate(-1)}>{"< "} Back</BackButton>
-      <Wrapper>
-        <Image src={product.images[0]?.src} />
-        <InfoContainer>
-          <Title>{product.title}</Title>
-          <Subtitle>${newMoneyFormat}</Subtitle>
-          <p>{product.description}</p>
-          <InputForm>
-            <Subtitle><label htmlFor="qty">Quantity:</label></Subtitle>
-            <Input placeholder="1" id="qty" type="number" {...bind} />
-          </InputForm>
-          <PrimaryButton text="Add to cart" onClick={() => addVariantToCart(product, bind.value)} />
-        </InfoContainer>
-      </Wrapper>
-    </Layout>
-  )
-}
-
 export default ProductTemplate
-
-const BackButton = styled.p`
-  cursor: pointer;
-  color: #014c40;
-  margin-left: 40px;
-  font-size: 14px;
-  font-weight: 600;
-`
-
-const Wrapper = styled.div`
-  margin: 40px;
-  display: grid;
-  grid-template-columns: 400px auto;
-  gap: 40px;
-`
-
-const Image = styled.img`
-  width: 400px;
-  height: 500px;
-  border-radius: 30px;
-  object-fit: cover;
-`
-
-const InfoContainer = styled.div`
-  display: grid;
-  align-items: flex-start;
-  height: fit-content;
-  gap: 10px;
-  p {
-    margin: 0;
-  }
-`
-
-const Title = styled.h1`
-  margin: 0;
-`
-
-const Subtitle = styled.p`
-  font-weight: bold;
-  max-width: 500px;
-`
-
-const InputForm = styled.form`
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  width: fit-content;
-  gap: 20px;
-  align-items: center;
-  gap: 10px;
-`
-
-const Input = styled.input`
-  border-radius: 20px;
-  border: 2px solid rgba(0,0,0,0.3);
-  padding: 10px 20px;
-  max-width: 80px;
-  font-size: 12px;
-  :focus {
-    outline: none;
-    outline-color: #014c40;
-  }
-`
