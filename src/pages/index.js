@@ -12,7 +12,7 @@ const IndexPage = () => {
       <Seo title="Home" />
       <StaticImage
         src="../images/hero.jpeg"
-        alt="flour and eggs"
+        alt="hats"
         className="hero-img"
         placeholder="tracedSVG"
         layout="fullWidth"      

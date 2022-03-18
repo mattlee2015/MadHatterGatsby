@@ -3,12 +3,16 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import ImageGalleryWrapper from './ImageGalleryWrapper'
 import ImageThumbnail from './ImageThumbnail/ImageThumbnail'
 
+
+
 const ImageGallery = ({images}) => {
-    
+
     const [activeImageThumbnail, setActiveImageThumbnail] = React.useState(images[0])
+
     const [activeImageIndex, setActiveImageIndex] = React.useState(0)
 
     const activeImagePath =getImage(activeImageThumbnail)
+
 
   return (
       <ImageGalleryWrapper>
@@ -25,7 +29,8 @@ const ImageGallery = ({images}) => {
                             onClickImg={()=>{
                                 setActiveImageThumbnail(image)
                                 setActiveImageIndex(index)
-                            }}
+                            }
+                            }     
                             isActive={activeImageIndex === index}
                             >
                         </ImageThumbnail>

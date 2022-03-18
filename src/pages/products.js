@@ -13,12 +13,8 @@ const Products = ({ data }) => {
         <Layout>
 			<ProductsWrapper>
 				{nodes?.map((product,index)=>{
-          // const woa = withoutApostrophe(product.title)
-          // const slugify_url = slugify(woa,{lower:true})
                     return (
-                      // <Link to={`/products/${slugify_url}`}>
                         <ProductCard key={index} product={product}></ProductCard> 
-                      // </Link>
                     )
                 })}
 			</ProductsWrapper>

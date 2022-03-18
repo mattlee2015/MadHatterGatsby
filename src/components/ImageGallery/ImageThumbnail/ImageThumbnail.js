@@ -6,8 +6,12 @@ const ImageThumbnail = ({isActive, onClickImg, image}) => {
 
     const imagePath = getImage(image)
 
+    const handleClick = () =>{
+      onClickImg(image)
+    }
+
   return (
-    <ImageThumbnailWrapper onClick={onClickImg} isActive={isActive}>
+    <ImageThumbnailWrapper onClick={handleClick} isActive={isActive}>
         <GatsbyImage image={imagePath} className="small-img" alt="small-images-product"/>
     </ImageThumbnailWrapper>
   )

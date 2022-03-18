@@ -18,16 +18,16 @@ const ProductCard = ({ product }) => {
     <Wrapper>
       <AddButton onClick={
         () => /*addVariantToCart(product, 1)*/
-        console.log("added item")}><p>+</p>
+        alert("added item")}><p>+</p>
       </AddButton>
       <ContentWrapper>
         <Link to={`/products/${slugTitle}`}>
         <Image src={product.images[0]?.originalSrc} alt={title}/>
-        </Link>
         <TextWrapper>
           <Title>{title}</Title>
           <Price>${mf}</Price>
         </TextWrapper>
+        </Link>
       </ContentWrapper>
     </Wrapper>
   )
@@ -41,7 +41,7 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
   align-items: center;
-  width: 200px;
+  width: 300px;
   border-radius: 20px;
 
   gap: 10px;
@@ -63,9 +63,9 @@ const Wrapper = styled.div`
 const ContentWrapper = styled.div``
 
 const Image = styled.img`
-  width: 200px;
+  width: 280px;
   height: 300px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 20px;
   margin: 0;
 `
@@ -74,9 +74,10 @@ const TextWrapper = styled.div`
   position: absolute;
   bottom: 0px;
   left: 0px;
+  
   border-radius: 0 0 20px 20px;
   background: rgba(255, 255, 255, 0.2);
-  width: 200px;
+  width: 100%;
   padding: 10px 0;
   backdrop-filter: blur(40px);
 `
@@ -97,10 +98,10 @@ const Price = styled.p`
 
 const AddButton = styled.div`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
   background: #014c40;
-  padding: 10px;
+  padding: 1px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
