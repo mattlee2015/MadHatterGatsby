@@ -9,8 +9,6 @@ import useStore from '../context/StoreContext'
 const Cart = () => {
 
   const { cart, checkout } = useStore()
-  console.log(cart)
-  console.log(checkout)
 
   return (
     <Layout>

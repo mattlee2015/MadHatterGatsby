@@ -97,33 +97,3 @@ const Price = styled.p`
   margin: 0;
   color: black;
 `
-
-const AddButton = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #014c40;
-  padding: 1px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  :hover {
-    transform: scale(1.2);
-    transition: 0.2s;
-  }
-  p {
-    margin: 0;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    line-height: 0;
-    @media not all and (min-resolution:.001dpcm) { 
-      @supports (-webkit-appearance: none) {
-        margin-bottom: 5px;
-      }
-    }
-  }
-`

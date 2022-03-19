@@ -1,16 +1,15 @@
 
 import React from 'react'
-import { navigate } from 'gatsby'
+// import { navigate } from 'gatsby'
 import Layout from '../components/Layout'
 import {Grid} from './ProductGridWrapper'
 import ImageGallery from '../components/ImageGallery/ImageGallery'
-import queryString from 'query-string'
+// import queryString from 'query-string'
 import {FaPlus, FaMinus} from 'react-icons/fa'
-import { useLocation } from '@reach/router'
+// import { useLocation } from '@reach/router'
 import styled from 'styled-components'
 import Back from '../components/Back'
 import useStore from '../context/StoreContext'
-import VariantSelect from '../components/VariantSelect'
 import Price from '../components/Price'
 
 
@@ -31,6 +30,11 @@ const ProductTemplate = ({pageContext}) => {
     setNumOfItems(numOfItems<=0?0:numOfItems-1)
   }
 
+  const [currVariantIndex, setCurrVariantIndex] = React.useState(0)
+
+
+  
+ 
     return (
       <Layout>
         <Back/>
@@ -38,8 +42,22 @@ const ProductTemplate = ({pageContext}) => {
           <div className="right-col">
             <h1>{title}</h1>
             <p className="description">{description}</p>
-            <VariantSelect variants={product.variants}/>
-            <Price variant={product.variants[0]}/>
+            {/* <SelectWrapper>
+              <strong>Variant</strong>
+                <select className="variantSelect" onChange={(e) =>{
+                  setCurrVariantIndex(e.target.value)
+                }}> 
+                  {product.variants.map((variant, index)=>{
+                    return (
+                      <option value={index} key={index}>
+                        {variant.title}
+                      </option>
+                    )
+                  })}
+                </select>
+            </SelectWrapper> */}
+
+            <Price variant={product.variants[currVariantIndex]}/>
             <Quantity>
                 <h4>Quantity</h4>
                 <form >
@@ -73,14 +91,14 @@ const ProductTemplate = ({pageContext}) => {
             <OrderButtonsWrapper>
               <button 
               type="button" 
-              disabled={product.variants[0].inventoryQuantity <1 ? true : false}
-              onClick={()=>addVariantToCart(product, numOfItems)}>
+              disabled={product.variants[currVariantIndex].inventoryQuantity <1 ? true : false}
+              onClick={()=>addVariantToCart(product,numOfItems)}>
                   Add to cart
               </button>
               <button 
               onClick={()=>alert("Send user to checkout page")}
               type="button" 
-              disabled={product.variants[0].inventoryQuantity <1 ? true : false}>
+              disabled={product.variants[currVariantIndex].inventoryQuantity <1 ? true : false}>
                   Buy it now
                 </button>
             </OrderButtonsWrapper>
@@ -171,4 +189,16 @@ const OrderButtonsWrapper = styled.div`
       color:#00BB77;
   }
 `
+const SelectWrapper = styled.div`
+    margin-top: 40px;
+    >strong{
+        display: block;
+        margin-bottom: 8px;
+    }
 
+    .variantSelect{
+        padding: 10px;
+    }
+
+    
+`

@@ -15,6 +15,7 @@ export const Grid = styled.section`
         }
 
         .description{
+            margin-top:30px;
             width:75%;
         }
         

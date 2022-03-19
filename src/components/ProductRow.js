@@ -6,7 +6,10 @@ import useStore from "../context/StoreContext";
 const ProductRow = ({ item }) => {
   const {removeLineItem} = useStore()
 	const { product, quantity } = item
-    const imagePath = getImage(product.images[0])
+  const imagePath = getImage(product.images[0])
+
+  console.log("ProductRow")
+  console.log(product)
 
   return (
     <Wrapper>
