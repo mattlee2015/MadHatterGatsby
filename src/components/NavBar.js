@@ -3,6 +3,9 @@ import {Link} from 'gatsby'
 import styled from 'styled-components'
 import {FaShoppingCart, FaRedhat} from 'react-icons/fa'
 
+
+
+
 const Navbar = () => {
   return (
     <NavBarWrapper>

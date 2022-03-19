@@ -1,25 +1,27 @@
 import React from 'react'
 import styled from "styled-components"
-// import useStore from '../context/StoreContext'
 import withoutApostrophe from '../util/apostrophe'
 import slugify from 'slugify'
 import { Link } from 'gatsby'
 import moneyFormat from '../util/moneyFormat'
+// import useStore from '../context/StoreContext'
 
 const ProductCard = ({ product }) => {
-  // const { addVariantToCart } = useStore()
 
   const {title} = product
   const woa = withoutApostrophe(product.title)
   const slugTitle = slugify(woa,{lower:true})
   const mf = moneyFormat(product.priceRangeV2.maxVariantPrice.amount)
+  // const {addVariantToCart} = useStore()
 
   return (
     <Wrapper>
-      <AddButton onClick={
-        () => /*addVariantToCart(product, 1)*/
-        alert("added item")}><p>+</p>
-      </AddButton>
+      {/* <AddButton onClick={()=>{
+        addVariantToCart(product, 1)
+        console.log("AddButton clicked")
+        }}>
+        <p>+</p>
+      </AddButton> */}
       <ContentWrapper>
         <Link to={`/products/${slugTitle}`}>
         <Image src={product.images[0]?.originalSrc} alt={title}/>
