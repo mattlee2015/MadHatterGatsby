@@ -1,36 +1,34 @@
 import styled from 'styled-components'
 
 export const Grid = styled.section`
-        
-    @media screen and (min-width: 768px) {
+    h1{
+        font-size: 60px;
+        width: 100%;
+        text-align: center;
+        margin-top: 2vh;
+    }
+    .columns{
+        margin-top: 20px;
         display:flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: stretch;
-        margin-top:3vh;
-
-        h1{
-            font-size: 60px;
-            width: 80%;
-        }
-
-        .description{
-            margin-top:30px;
-            width:75%;
-        }
+        justify-content: space-evenly;
         
-        >div:first-child{
-            order:2;        
-            width:50%;
+    }
+
+    @media screen and (max-width: 900px){
+        .columns{
+            flex-direction: column;
+        }
+
+        .right-col{
+            margin-top: 20px;
+            display:flex;
+            flex-direction: column;
+            align-items: center;
             
         }
 
-        >div:last-child{
-            order:1;
-            width:50%;
-        }
-        
     }
+
 
    
 `

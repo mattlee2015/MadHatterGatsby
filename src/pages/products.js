@@ -25,12 +25,15 @@ const Products = ({ data }) => {
 export default Products
 
 const ProductsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  /* grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   margin-left: 10vw;
   margin-top: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 30px; */
 `
 
 export const query = graphql`

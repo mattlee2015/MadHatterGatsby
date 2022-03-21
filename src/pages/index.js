@@ -6,12 +6,13 @@ import {Link} from 'gatsby'
 import styled from 'styled-components'
 
 const IndexPage = () => {
+
   return (
     <Layout>
       <HomePage>
       <Seo title="Home" />
       <StaticImage
-        src="../images/hero.jpeg"
+        src='../images/hero.jpeg'
         alt="hats"
         className="hero-img"
         placeholder="tracedSVG"
@@ -45,6 +46,7 @@ const HomePage = styled.section`
     height: 40vh;
     position: relative;
     margin-bottom: 2rem;
+    
   }
 
   .hero-container{
@@ -67,22 +69,30 @@ const HomePage = styled.section`
 
   .hero-text h1{
     font-size: 60px;
+    text-align: center;
+    @media screen and (max-width: 500px){
+      font-size: 35px;
+    }
   }
   .hero-text h4{
+    text-align: center;
     font-size: 30px;
+
+    @media screen and (max-width: 500px){
+      font-size: 15px;
+    }
+
   }
 
   .btn-row{
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
+    position: relative;
     
   }
 
   .btn{
-    padding: 8px 30px;
-    margin: 30px 0;
-    margin-left: 50px;
+    padding: 8px 20px;
+    margin:0;
+    margin-top:20px;
     border-radius: 1rem;
     background-color: #2F6539;
     border: 1px solid white;
