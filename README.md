@@ -1,6 +1,6 @@
 **Note**:
 
-**V2 Branch has the working version -> can switch to that one for a working product**
+**V4 Branch has the working version -> can switch to that one for a working product**
 
 • All products and items displayed were imported from a .csv file via shopify 
 
